@@ -24,6 +24,7 @@ basic <- function(fit,title="",legend="none"){
         theme(#plot.background = element_blank(), 
               #panel.grid.major = element_blank(),
               #panel.grid.minor = element_blank(),
+              title = element_text(vjust=2),
               panel.border = element_blank(),
               legend.position=legend_position,
               legend.justification=legend_position,
