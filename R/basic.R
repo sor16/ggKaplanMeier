@@ -1,6 +1,7 @@
-basic <- function(fit,return=FALSE){
+basic <- function(fit,title="",legend="none"){
     require(ggplot2)
     require(survival)
+    legend_position=switch(legend,"none"="none","top-right"=c(1,1),"bottom-right"=c(1,0),"top-left"=c(0,1),"bottom-left"=c(0,0))
     f.frame=as.data.frame(with(fit,cbind(time,n.risk,n.event,n.censor,surv,upper,lower)))
     if(is.null(fit$strata)){
         rbind()
@@ -19,12 +20,13 @@ basic <- function(fit,return=FALSE){
     f.frame=f.frame[with(f.frame,order(strata,time)),]
     g=ggplot(data=f.frame,aes(time,surv))+geom_step(aes(time,surv,colour=strata),direction="hv")+
         geom_point(data=subset(f.frame, n.censor > 0), aes(x=time, y=surv),shape=3)+theme_bw()+
-        geom_step(aes(time,upper,colour=strata),direction="hv",linetype="dashed")+geom_step(aes(time,lower,colour=strata),direction="hv",linetype="dashed")+
-        theme(plot.background = element_blank(), 
-              panel.grid.major = element_blank(),
-              panel.grid.minor = element_blank(),
-              panel.border = element_blank(),
-              legend.position="none",
+        geom_step(aes(time,upper,colour=strata),direction="hv",linetype="dashed")+geom_step(aes(time,lower,colour=strata),direction="hv",linetype="dashed")+ggtitle(title)+
+        theme(#plot.background = element_blank(), 
+              #panel.grid.major = element_blank(),
+              #panel.grid.minor = element_blank(),
+              #panel.border = element_blank(),
+              legend.position=legend_position,
+              legend.justification=legend_position,
               axis.line = element_line(color = 'black'))
     
     return(list("plot"=g,"data"=f.frame))
