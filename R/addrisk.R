@@ -51,9 +51,8 @@ addrisk <- function(input){
     both <- gtable_add_grob(both,
                             textGrob("Number at risk", hjust=0, x=0,gp = gpar(fontsize = 12)),
                             t=9, l=3, r=4)
-    g <- arrangeGrob(plot, tbl,nrow=2)
 #     grid.newpage()
 #     grid.draw(both)
-    return(plotobject=both)
+    return(both)
 
 }
