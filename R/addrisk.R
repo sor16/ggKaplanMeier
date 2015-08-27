@@ -7,14 +7,10 @@ addrisk <- function(input){
     if(!("gg" %in% class(plot))){
         stop("plot has to be of class ggplot")
     }
-    xticks=ggplot_build(plot)$panel$ranges[[1]]$x.major_source
-    xrange=ggplot_build(plot)$panel$ranges[[1]]$x.range
-    risk.data <- data.frame(strata = summary(fit, times = xticks, extend = TRUE)$strata,
-                            time = summary(fit, times = xticks, extend = TRUE)$time,
-                            n.risk = summary(fit, times = xticks, extend = TRUE)$n.risk)
 
+    xticks=ggplot_build(plot)$panel$ranges[[1]]$x.major_source
     tbl <- ggplot(risk.data, aes(x = time, y = factor(strata,levels=rev(levels(strata))), label=n.risk)) + coord_cartesian(xlim = xrange) +
-        geom_text(size = 3.5)+theme_bw()+ylab("")+scale_y_discrete(breaks=levels(data$strata), labels=levels(data$strata))+ theme(
+        geom_text(size = 3.5)+theme_bw()+ylab("")+scale_y_discrete(breaks=levels(strata), labels=levels(strata))+ theme(
             panel.grid.major = element_blank(),
             legend.position = "none",
             plot.background = element_blank(),

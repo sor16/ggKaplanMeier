@@ -28,7 +28,11 @@ basic <- function(fit,title="",legend="none"){
               legend.position=legend_position,
               legend.justification=legend_position,
               axis.line = element_line(color = 'black'))
+    xticks=ggplot_build(g)$panel$ranges[[1]]$x.major_source
+    risk.data <- data.frame(strata = summary(fit, times = xticks, extend = TRUE)$strata,
+                            time = summary(fit, times = xticks, extend = TRUE)$time,
+                            n.risk = summary(fit, times = xticks, extend = TRUE)$n.risk)
     
-    return(list("plot"=g,"data"=f.frame))
+    return(list("plot"=g,"risk.data"=risk.data))
 }
     
