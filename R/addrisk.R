@@ -8,7 +8,7 @@ addrisk <- function(input){
         stop("plot has to be of class ggplot")
     }
 
-    xrange=ggplot_build(plot)$panel$ranges[[1]]$x.major_source
+    xrange=ggplot_build(plot)$panel$ranges[[1]]$x.range
     tbl <- ggplot(risk.data, aes(x = time, y = factor(strata,levels=rev(levels(strata))), label=n.risk)) + coord_cartesian(xlim = xrange) +
         geom_text(size = 3.5)+theme_bw()+ylab("")+scale_y_discrete(breaks=levels(strata), labels=levels(strata))+ theme(
             panel.grid.major = element_blank(),
