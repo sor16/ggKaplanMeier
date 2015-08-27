@@ -10,7 +10,7 @@ addrisk <- function(input){
 
     xrange=ggplot_build(plot)$panel$ranges[[1]]$x.range
     tbl <- ggplot(risk.data, aes(x = time, y = factor(strata,levels=rev(levels(strata))), label=n.risk)) + coord_cartesian(xlim = xrange) +
-        geom_text(size = 3.5)+theme_bw()+ylab("")+scale_y_discrete(breaks=levels(strata), labels=levels(strata))+ theme(
+        geom_text(size = 3.5)+theme_bw()+ylab("")+scale_y_discrete(breaks=levels(risk.data$strata), labels=levels(risk.data$strata))+ theme(
             panel.grid.major = element_blank(),
             legend.position = "none",
             plot.background = element_blank(),
@@ -47,8 +47,8 @@ addrisk <- function(input){
     both <- gtable_add_grob(both,
                             textGrob("Number at risk", hjust=0, x=0,gp = gpar(fontsize = 12)),
                             t=9, l=3, r=4)
-#     grid.newpage()
-#     grid.draw(both)
+    grid.newpage()
+     grid.draw(both)
     return(both)
 
 }
