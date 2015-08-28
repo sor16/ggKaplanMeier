@@ -23,7 +23,8 @@ addrisk <- function(input){
             axis.ticks=element_blank(),
             axis.title.x = element_blank(),
             axis.title.y = element_blank(),
-            plot.title = element_blank()
+            plot.title = element_blank(),
+            plot.margin = unit(c(-0.2,1,1, 1),"cm")
         )
 
     gb1=ggplot_build(plot)
