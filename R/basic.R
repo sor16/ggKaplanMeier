@@ -1,4 +1,5 @@
 basic <- function(fit,title="",legend="none",confinterval=TRUE,actualAge=FALSE){
+    require(grid)
     require(ggplot2)
     require(survival)
     legend_position=switch(legend,"none"="none","top-right"=c(1,1),"bottom-right"=c(1,0),"top-left"=c(0,1),"bottom-left"=c(0,0))
