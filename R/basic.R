@@ -1,4 +1,4 @@
-basic <- function(fit,title="",legend="none",confinterval=TRUE,actualAge=FALSE){
+gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,actualAge=FALSE,background=TRUE){
     require(grid)
     require(ggplot2)
     require(survival)
@@ -13,11 +13,11 @@ basic <- function(fit,title="",legend="none",confinterval=TRUE,actualAge=FALSE){
         }
         g=ggplot(data=f.frame)+geom_step(aes(time,surv,colour=strata),direction="hv")+
             geom_point(data=subset(f.frame, n.censor > 0), aes(x=time, y=surv),shape=3)+theme_bw()+ggtitle(title)+
-            theme(#plot.background = element_blank(), 
+            theme(plot.background = element_blank(), 
                 #panel.grid.major = element_blank(),
                 #panel.grid.minor = element_blank(),
                 title = element_text(vjust=0),
-                #panel.border = element_blank(),
+                panel.border = element_blank(),
                 legend.position=legend_position,
                 legend.justification=legend_position,
                 axis.title.x=element_text(vjust=0.7),
