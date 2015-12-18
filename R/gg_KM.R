@@ -15,7 +15,7 @@ gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,actualAge=FALSE,b
         }
         g=ggplot(data=f.frame)+geom_step(aes(time,surv,colour=strata),direction="hv")+
             geom_point(data=subset(f.frame, n.censor > 0), aes(x=time, y=surv),shape=3)+theme_bw()+ggtitle(title)+
-            ylab(ylabel)+xlab(xlabel)+geom_text(data=pval,aes(x,y,label=text))+
+            ylab(ylabel)+xlab(xlabel)+
             theme(title = element_text(vjust=0),
                 legend.position=legend_position,
                 legend.justification=legend_position,
@@ -37,7 +37,7 @@ gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,actualAge=FALSE,b
         f.frame=f.frame[with(f.frame,order(strata,time)),]
         g=ggplot(data=f.frame,aes(time,surv))+geom_step(aes(time,surv,colour=strata),direction="hv")+
             geom_point(data=subset(f.frame, n.censor > 0), aes(x=time, y=surv),shape=3)+theme_bw()+
-            ggtitle(title)+ylab(ylabel)+xlab(xlabel)+geom_text(data=pval,aes(x,y,label=text))+
+            ggtitle(title)+ylab(ylabel)+xlab(xlabel)+
             theme(
                   title = element_text(vjust=2),
                   legend.position=legend_position,
@@ -61,7 +61,11 @@ gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,actualAge=FALSE,b
     }
     if(length(colors)!=0){
         g=g+scale_colour_manual(values=colors)
-    } 
+    }
+    if(!is.na(as.numeric(pval$x))){
+        g=g+geom_text(data=pval,aes(x,y,label=text))
+    }
+    
     xticks=ggplot_build(g)$panel$ranges[[1]]$x.major_source
     g=g+scale_x_continuous(breaks = pretty_breaks(n=length(xticks)*nrTicks))
     xticks=ggplot_build(g)$panel$ranges[[1]]$x.major_source

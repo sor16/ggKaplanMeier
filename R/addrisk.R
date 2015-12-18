@@ -36,13 +36,12 @@ addrisk <- function(input){
     gA <- ggplot_gtable(gb1)
     gB <- ggplot_gtable(gb2)
 
-    # combine both plots (last should really be "pmax", it's an unfortunate bug)
+    # combine both plots 
     both <- gtable:::rbind_gtable(gA, gB, "last")
 
     # locate the panels in the gtable layout
     panels <- both$layout$t[grepl("panel", both$layout$name)]
-    # assign new (relative) heights to the panels, based on the number of breaks
-    #note that n1 and n2 was previously used, now replace by constants 1 and 8
+    # assign new heights to the panels, based on the number of breaks
     both$heights[panels] <- list(unit(8,"null"), unit(1, "null"))
     both <- gtable_add_rows(both, heights = unit(1,"line"), 8)
     both <- gtable_add_grob(both,
