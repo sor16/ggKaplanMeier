@@ -1,4 +1,4 @@
-gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,actualAge=FALSE,background=TRUE,ticks="1x",ylabel="surv",xlabel="time",colors=c()){
+gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,actualAge=FALSE,background=TRUE,ticks="1x",ylabel="surv",xlabel="time",colors=c(),pval=data.frame(text="",x=0,y=0)){
     require(scales)
     require(grid)
     require(ggplot2)
@@ -15,24 +15,16 @@ gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,actualAge=FALSE,b
         }
         g=ggplot(data=f.frame)+geom_step(aes(time,surv,colour=strata),direction="hv")+
             geom_point(data=subset(f.frame, n.censor > 0), aes(x=time, y=surv),shape=3)+theme_bw()+ggtitle(title)+
-            ylab(ylabel)+xlab(xlabel)+scale_colour_manual(values)
+            ylab(ylabel)+xlab(xlabel)+geom_text(data=pval,aes(x,y,label=text))+
             theme(title = element_text(vjust=0),
                 legend.position=legend_position,
                 legend.justification=legend_position,
                 axis.title.x=element_text(vjust=0.7),
                 plot.margin = unit(c(1,1,0.2, 1),"cm"))
-        if(!background){
-            g=g+theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), 
-                  panel.background = element_blank(), axis.line = element_line(color = "black"),
-                  panel.border = element_blank())
-        }
         if(confinterval){
             g=g+geom_step(aes(time,upper,colour=strata),direction="hv",linetype="dashed")+
                 geom_step(aes(time,lower,colour=strata),direction="hv",linetype="dashed") 
         }
-        if(length(colors)!=0){
-            g=g+scale_colour_manual(values=colors)
-        } 
     }else {
         strata=rep(names(fit$strata),fit$strata)
         f.frame$strata=factor(strata)
@@ -45,7 +37,7 @@ gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,actualAge=FALSE,b
         f.frame=f.frame[with(f.frame,order(strata,time)),]
         g=ggplot(data=f.frame,aes(time,surv))+geom_step(aes(time,surv,colour=strata),direction="hv")+
             geom_point(data=subset(f.frame, n.censor > 0), aes(x=time, y=surv),shape=3)+theme_bw()+
-            ggtitle(title)+ylab(ylabel)+xlab(xlabel)+
+            ggtitle(title)+ylab(ylabel)+xlab(xlabel)+geom_text(data=pval,aes(x,y,label=text))+
             theme(
                   title = element_text(vjust=2),
                   legend.position=legend_position,
@@ -53,21 +45,23 @@ gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,actualAge=FALSE,b
                   axis.title.x=element_text(vjust=0),
                   axis.line = element_line(color = 'black'),
                   plot.margin = unit(c(1,1,0.2, 1),"cm"))
-        if(!background){
-            g=g+theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), 
-                      panel.background = element_blank(), axis.line = element_line(color = "black"), 
-                      panel.border = element_blank()
-)
-        }
+
         
         if(confinterval){
             g=g+geom_step(aes(time,upper,colour=strata),direction="hv",linetype="dashed")+
                 geom_step(aes(time,lower,colour=strata),direction="hv",linetype="dashed") 
         }
-        if(length(colors)!=0){
-            g=g+scale_colour_manual(values=colors)
-        } 
+
     }
+    if(!background){
+        g=g+theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), 
+                  panel.background = element_blank(), axis.line = element_line(color = "black"), 
+                  panel.border = element_blank()
+        )
+    }
+    if(length(colors)!=0){
+        g=g+scale_colour_manual(values=colors)
+    } 
     xticks=ggplot_build(g)$panel$ranges[[1]]$x.major_source
     g=g+scale_x_continuous(breaks = pretty_breaks(n=length(xticks)*nrTicks))
     xticks=ggplot_build(g)$panel$ranges[[1]]$x.major_source
