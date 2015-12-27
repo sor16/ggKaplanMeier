@@ -79,6 +79,6 @@ gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,actualAge=FALSE,b
                             time = summary(fit, times = xticks, extend = TRUE)$time,
                             n.risk = summary(fit, times = xticks, extend = TRUE)$n.risk)
     
-    return(list("plot"=g,"risk.data"=risk.data))
+    return(list("plot"=g,"risk.data"=risk.data,"f.frame"=f.frame))
 }
     
