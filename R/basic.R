@@ -1,4 +1,4 @@
-gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,actualAge=FALSE,background=TRUE){
+basic <- function(fit,title="",legend="none",confinterval=TRUE,actualAge=FALSE,background=TRUE){
     require(grid)
     require(ggplot2)
     require(survival)
