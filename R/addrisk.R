@@ -44,8 +44,8 @@ addrisk <- function(input){
     # locate the panels in the gtable layout
     panels <- both$layout$t[grepl("panel", both$layout$name)]
     # assign new heights to the panels, based on the number of breaks
-    both$heights[panels] <- list(unit(n1,"null"), unit(n2, "null"))
-    both <- gtable_add_rows(both, heights = unit(n2,"line"), n1)
+    both$heights[panels] <- list(unit(8,"null"), unit(1, "null"))
+    both <- gtable_add_rows(both, heights = unit(1,"line"), 8)
     both <- gtable_add_grob(both,
                              textGrob("Number at risk", hjust=0, x=0,gp = gpar(fontsize = 12)),
                              t=9, l=3, r=4)

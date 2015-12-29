@@ -1,14 +1,17 @@
-gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,actualAge=FALSE,background=TRUE,ticks="1x",ylabel="surv",xlabel="time",colors=c(),pval=data.frame(text="",x=0,y=0)){
+gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,startPoint=FALSE,background=TRUE,ticks="1x",ylabel="surv",xlabel="time",colors=c(),pval=data.frame(text="",x="",y="",stringsAsFactors = FALSE), namesOfStrata = c(), timeInYears = FALSE){
     require(scales)
     require(grid)
     require(ggplot2)
     require(survival)
     nrTicks=switch(ticks,"1x"=1,"2x"=2,"4x"=4)
+    if(timeInYears) fit$time=fit$time/365.25
+    if(length(namesOfStrata)!=0 && !is.null(fit$strata)) names(fit$strata) = namesOfStrata
+
     legend_position=switch(legend,"none"="none","top-right"=c(1,1),"bottom-right"=c(1,0),"top-left"=c(0,1),"bottom-left"=c(0,0))
     f.frame=as.data.frame(with(fit,cbind(time,n.risk,n.event,n.censor,surv,upper,lower)))
     if(!"strata" %in% names(fit)){
         f.frame$strata=factor("Overall")
-        if(actualAge==FALSE){
+        if(startPoint==FALSE){
             start=data.frame(time=c(0, f.frame$time[1]), n.risk=c(fit$n, fit$n), n.event=c(0,0), 
                                   n.censor=c(0,0), surv=c(1,1), upper=c(1,1), lower=c(1,1),strata=rep(levels(f.frame$strata),2))
             f.frame=rbind(start,f.frame)
@@ -18,6 +21,7 @@ gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,actualAge=FALSE,b
             ylab(ylabel)+xlab(xlabel)+
             theme(title = element_text(vjust=0),
                 legend.position=legend_position,
+                legend.title=element_blank(),
                 legend.justification=legend_position,
                 axis.title.x=element_text(vjust=0.7),
                 plot.margin = unit(c(1,1,0.2, 1),"cm"))
@@ -28,7 +32,7 @@ gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,actualAge=FALSE,b
     }else {
         strata=rep(names(fit$strata),fit$strata)
         f.frame$strata=factor(strata)
-        if(actualAge==FALSE){
+        if(startPoint==FALSE){
             zeros=rep(0,length(fit$strata))
             ones=rep(1,length(fit$strata))
             start=data.frame("time"=zeros,"n.risk"=fit$n,"n.event"=zeros,"n.censor"=zeros,"surv"=ones,"upper"=ones,"lower"=ones,"strata"=names(fit$strata))
@@ -42,6 +46,7 @@ gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,actualAge=FALSE,b
                   title = element_text(vjust=2),
                   legend.position=legend_position,
                   legend.justification=legend_position,
+                  legend.title=element_blank(),
                   axis.title.x=element_text(vjust=0),
                   axis.line = element_line(color = 'black'),
                   plot.margin = unit(c(1,1,0.2, 1),"cm"))
@@ -62,7 +67,7 @@ gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,actualAge=FALSE,b
     if(length(colors)!=0){
         g=g+scale_colour_manual(values=colors)
     }
-    if(!is.na(as.numeric(pval$x))){
+    if(!is.na(as.numeric(pval$x)) && nchar(pval)!=0){
         g=g+geom_text(data=pval,aes(x,y,label=text))
     }
     
