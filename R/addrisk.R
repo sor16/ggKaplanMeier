@@ -43,14 +43,14 @@ addrisk <- function(input){
     panels <- both$layout$t[grepl("panel", both$layout$name)]
     # assign new heights to the panels, based on the length of strata
     tableHeight=ifelse(length(f.frame$strata) < 4,1,2)
-    both$heights[panels] <- list(unit(8,"null"), unit(tableHeight, "null"))
+    both$heights[panels] <- unit.c(unit(8,"null"), unit(tableHeight, "null"))
     both <- gtable_add_rows(both, heights = unit(1,"line"), 8)
     both <- gtable_add_grob(both,
                              textGrob("Number at risk", hjust=0, x=0,gp = gpar(fontsize = 12)),
                              t=9, l=3, r=4)
     
     grid.newpage()
-    grid.draw(both)
+    grid.draw(both)                                                                                                                                                                                                                                                                                                                                                                                                                                             
     return(both)
 
 }
