@@ -3,7 +3,12 @@ gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,startPoint=FALSE,
     require(grid)
     require(ggplot2)
     require(survival)
-    
+    #bad solution, fix soon
+    if(cumIncidence){
+        fit[["surv"]]=1-fit[["surv"]]
+        fit[["lower"]]=1-fit[["lower"]]
+        fit[["upper"]]=1-fit[["upper"]]
+    }
     nrTicks=switch(ticks,"1x"=1,"2x"=2,"4x"=4)
     
     if(timeInYears) fit$time=fit$time/365.25
