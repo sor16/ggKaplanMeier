@@ -1,2 +1,2 @@
-# ggKaplanMeyer
-A general method to generate Kaplan Meyer plots using ggplot2 
+# ggKaplanMeier
+A general method to generate Kaplan Meier plots using ggplot2 
