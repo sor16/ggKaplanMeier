@@ -1,4 +1,4 @@
-gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,startPoint=FALSE,background=TRUE,ticks="1x",ylabel="surv",xlabel="time",colors=c(),pval=data.frame(text="",x="",y="",stringsAsFactors = FALSE), namesOfStrata = c(), timeInYears = FALSE){
+gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,startPoint=FALSE,cumIncidence=FALSE,background=TRUE,ticks="1x",ylabel="surv",xlabel="time",colors=c(),pval=data.frame(text="",x="",y="",stringsAsFactors = FALSE), namesOfStrata = c(), timeInYears = FALSE){
     require(scales)
     require(grid)
     require(ggplot2)
@@ -21,8 +21,9 @@ gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,startPoint=FALSE,
     }
     if(startPoint==FALSE){
         zeros=rep(0,nlevels(f.frame$strata))
-        ones=rep(1,nlevels(f.frame$strata))
-        start=data.frame("time"=zeros,"n.risk"=fit$n,"n.event"=zeros,"n.censor"=zeros,"surv"=ones,"upper"=ones,"lower"=ones,"strata"=levels(f.frame$strata))
+        #Take into account if user wants to plot cumulative incidence 
+        startValue=ifelse(cumIncidence,rep(0,nlevels(f.frame$strata),rep(1,nlevels(f.frame$strata))))
+        start=data.frame("time"=zeros,"n.risk"=fit$n,"n.event"=zeros,"n.censor"=zeros,"surv"=startValue,"upper"=startValue,"lower"=startValue,"strata"=levels(f.frame$strata))
         f.frame=rbind(start,f.frame)
     }
     f.frame=f.frame[with(f.frame,order(strata,time)),]
