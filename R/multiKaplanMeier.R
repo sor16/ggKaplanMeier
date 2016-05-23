@@ -1,4 +1,4 @@
-generateKaplanMeier <- function(data,surv_object,wantedColumns,path,startAt=1,...){
+multiKaplanMeier <- function(data,surv_object,wantedColumns,path,startAt=1,cumIncidence=TRUE...){
     require(survival)
     require(devtools)
     require(ggKaplanMeyer)
