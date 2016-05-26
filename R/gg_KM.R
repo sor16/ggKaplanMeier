@@ -34,7 +34,7 @@ gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,startPoint=FALSE,
     f.frame=f.frame[with(f.frame,order(strata,time)),]
     g=ggplot(data=f.frame,aes(time,surv))+geom_step(aes(time,surv,colour=strata),direction="hv",na.rm=TRUE)+
         geom_point(data=subset(f.frame, n.censor > 0), aes(x=time, y=surv),shape=3,na.rm=TRUE)+theme_bw()+
-        ggtitle(title)+ylab(ylabel)+xlab(xlabel)+ylim(0,1)+
+        ggtitle(title)+ylab(ylabel)+xlab(xlabel)+ylim(0,1) + #xlim(0,max(fit$time)) +
         theme(
             title = element_text(vjust=2),
             legend.position=legend_position,
@@ -64,7 +64,8 @@ gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,startPoint=FALSE,
     }
     
     xticks=ggplot_build(g)$panel$ranges[[1]]$x.major_source
-    g=g+scale_x_continuous(breaks = pretty_breaks(n=length(xticks)*nrTicks))
+    xticks=xticks[!xticks<0]
+    g=g+scale_x_continuous(breaks = pretty(c(min(fit$time),max(xticks)),length(xticks)*nrTicks))
     xticks=ggplot_build(g)$panel$ranges[[1]]$x.major_source
     
     if(!"strata" %in% names(fit)){
