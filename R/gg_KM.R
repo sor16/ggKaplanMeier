@@ -64,8 +64,10 @@ gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,startPoint=FALSE,
     }
     
     xticks=ggplot_build(g)$panel$ranges[[1]]$x.major_source
-    xticks=xticks[!xticks<0]
-    g=g+scale_x_continuous(breaks = pretty(c(min(fit$time),max(xticks)),length(xticks)*nrTicks))
+    #Extract the right end of x axis
+    xmax= ggplot_build(g)$panel$ranges[[1]]$x.range[2]
+    #adding xticks and making sure they are non negative
+    g=g+scale_x_continuous(breaks = pretty(c(min(fit$time),xmax),length(xticks)*nrTicks))
     xticks=ggplot_build(g)$panel$ranges[[1]]$x.major_source
     
     if(!"strata" %in% names(fit)){
