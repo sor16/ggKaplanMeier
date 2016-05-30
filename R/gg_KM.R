@@ -43,7 +43,7 @@ gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,startPoint=FALSE,
             title = element_text(vjust=2),
             legend.position=legend_position,
             legend.justification=legend_position,
-            legend.background = element_rect(linetype = 1,colour="black"),
+            legend.background = element_rect(linetype = 1,colour="black",size=0.2),
             axis.title.x=element_text(vjust=0),
             axis.line = element_line(color = 'black'),
             plot.margin = unit(c(1,1,0.2, 1),"cm"))
