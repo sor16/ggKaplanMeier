@@ -1,5 +1,6 @@
 multiKaplanMeier <- function(data,surv_object,wantedColumns,path,...){
     require(survival)
+    require(grid)
     require(devtools)
     require(ggKaplanMeyer)
     setwd(path)
