@@ -26,7 +26,7 @@ gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,startPoint=FALSE,
         f.frame$strata=factor("Overall")
     }else {
         strata=rep(names(fit$strata),fit$strata)
-        f.frame$strata=factor(strata,levels=namesOfStrata)
+        f.frame$strata=factor(strata,levels=namesOfStrata,ordered = TRUE)
     }
     if(startPoint==FALSE){
         zeros=rep(0,nlevels(f.frame$strata))
