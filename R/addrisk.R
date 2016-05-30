@@ -8,9 +8,15 @@ addrisk <- function(input){
     if(!("gg" %in% class(plot))){
         stop("plot has to be of class ggplot")
     }
+    
     risk.data$strata=factor(risk.data$strata,levels=rev(levels(risk.data$strata)))
+    if(max(nchar(levels(risk.data$strata))) < 4){
+        riskLabels=paste("    ",levels(risk.data$strata))
+    }else{
+        riskLabels=levels(risk.data$strata)
+    }
     tbl <- ggplot(risk.data, aes(x = time, y = strata, label=n.risk))  +
-        geom_text(size = 3.5, na.rm=TRUE)+theme_bw()+ylab("")+scale_y_discrete(breaks=levels(risk.data$strata), labels=levels(risk.data$strata))+
+        geom_text(size = 3.5, na.rm=TRUE)+theme_bw()+ylab("")+scale_y_discrete(breaks=levels(risk.data$strata), labels=riskLabels) +
         theme(
             panel.grid.major = element_blank(),
             legend.position = "none",
