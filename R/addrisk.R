@@ -2,6 +2,7 @@ addrisk <- function(input){
     require(ggplot2)
     require(survival)
     require(gtable)
+    require(gridExtra)
     list2env(input,envir=environment())
     if(!("gg" %in% class(plot))){
         stop("plot has to be of class ggplot")
