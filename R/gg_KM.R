@@ -13,7 +13,7 @@ gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,startPoint=FALSE,
     
     if(timeInYears) fit$time=fit$time/365.25
     
-    if(length(namesOfStrata)!=0 && !is.null(fit$strata))  levels(fit$strata) = namesOfStrata
+    ifelse(length(namesOfStrata)!=0 && !is.null(fit$strata),names(fit$strata) = namesOfStrata,namesOfStrata=names(fit$strata))
     
     
     legend_position=switch(legend,"none"="none","top-right"=c(1,1),"bottom-right"=c(1,0),"top-left"=c(0,1),"bottom-left"=c(0,0))
@@ -23,7 +23,7 @@ gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,startPoint=FALSE,
         f.frame$strata=factor("Overall")
     }else {
         strata=rep(names(fit$strata),fit$strata)
-        f.frame$strata=factor(strata)
+        f.frame$strata=factor(strata,levels=namesOfStrata)
     }
     if(startPoint==FALSE){
         zeros=rep(0,nlevels(f.frame$strata))
