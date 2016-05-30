@@ -32,7 +32,7 @@ gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,startPoint=FALSE,
         zeros=rep(0,nlevels(f.frame$strata))
         #Take into account if user wants to plot cumulative incidence 
         startValue=ifelse(cumIncidence,rep(0,nlevels(f.frame$strata)),rep(1,nlevels(f.frame$strata)))
-        start=data.frame("time"=zeros,"n.risk"=fit$n,"n.event"=zeros,"n.censor"=zeros,"surv"=startValue,"upper"=startValue,"lower"=startValue,"strata"=levels(f.frame$strata))
+        start=data.frame("time"=zeros,"n.risk"=fit$n,"n.event"=zeros,"n.censor"=zeros,"surv"=startValue,"upper"=startValue,"lower"=startValue,"strata"=factor(namesOfStrata,levels=namesOfStrata,ordered=TRUE))
         f.frame=rbind(start,f.frame)
     }
     f.frame=f.frame[with(f.frame,order(strata,time)),]
@@ -43,7 +43,7 @@ gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,startPoint=FALSE,
             title = element_text(vjust=2),
             legend.position=legend_position,
             legend.justification=legend_position,
-            legend.background = element_rect(),
+            legend.background = element_rect(linetype = 1,colour="black"),
             axis.title.x=element_text(vjust=0),
             axis.line = element_line(color = 'black'),
             plot.margin = unit(c(1,1,0.2, 1),"cm"))
