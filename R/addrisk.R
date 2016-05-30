@@ -10,7 +10,7 @@ addrisk <- function(input){
     }
     
     risk.data$strata=factor(risk.data$strata,levels=rev(levels(risk.data$strata)))
-    if(max(nchar(levels(risk.data$strata))) < 4){
+    if(max(nchar(levels(risk.data$strata))) < 6){
         riskLabels=paste("    ",levels(risk.data$strata))
     }else{
         riskLabels=levels(risk.data$strata)
