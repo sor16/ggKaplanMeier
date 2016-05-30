@@ -15,6 +15,7 @@ gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,startPoint=FALSE,
     
     if(length(namesOfStrata)!=0 && !is.null(fit$strata))  names(fit$strata) = namesOfStrata
     
+    
     legend_position=switch(legend,"none"="none","top-right"=c(1,1),"bottom-right"=c(1,0),"top-left"=c(0,1),"bottom-left"=c(0,0))
     
     f.frame=as.data.frame(with(fit,cbind(time,n.risk,n.event,n.censor,surv,upper,lower)))
@@ -33,12 +34,13 @@ gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,startPoint=FALSE,
     }
     f.frame=f.frame[with(f.frame,order(strata,time)),]
     g=ggplot(data=f.frame,aes(time,surv))+geom_step(aes(time,surv,colour=strata),direction="hv",na.rm=TRUE)+
-        geom_point(data=subset(f.frame, n.censor > 0), aes(x=time, y=surv),shape=3,na.rm=TRUE)+theme_bw()+
-        ggtitle(title)+ylab(ylabel)+xlab(xlabel)+ylim(0,1) + scale_fill_continuous(guide=guide_legend(title=legendTitle)) +
+        geom_point(data=subset(f.frame, n.censor > 0), aes(x=time, y=surv),shape=3,size=0.5,na.rm=TRUE)+theme_bw()+
+        ggtitle(title)+ylab(ylabel)+xlab(xlabel)+ylim(0,1) + scale_color_discrete(name=legendTitle) +
         theme(
             title = element_text(vjust=2),
             legend.position=legend_position,
             legend.justification=legend_position,
+            legend.title=element_text(size=12),
             axis.title.x=element_text(vjust=0),
             axis.line = element_line(color = 'black'),
             plot.margin = unit(c(1,1,0.2, 1),"cm"))
