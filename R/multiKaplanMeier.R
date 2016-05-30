@@ -2,7 +2,7 @@ multiKaplanMeier <- function(data,surv_object,wantedColumns,path,...){
     require(survival)
     require(grid)
     require(devtools)
-    require(ggKaplanMeyer)
+    require(ggKaplanMeier)
     setwd(path)
     wantedColumns <- paste("^",wantedColumns,"$",sep="") %>% paste(collapse = "|")
     plotData <- data %>% select(matches(wantedColumns))
