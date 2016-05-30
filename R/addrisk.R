@@ -1,6 +1,7 @@
 addrisk <- function(input){
     require(ggplot2)
     require(survival)
+    require(grid)
     require(gtable)
     require(gridExtra)
     list2env(input,envir=environment())
