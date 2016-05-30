@@ -15,7 +15,6 @@ gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,startPoint=FALSE,
     
     ifelse(length(namesOfStrata)!=0 && !is.null(fit$strata),names(fit$strata) = namesOfStrata,namesOfStrata=names(fit$strata))
     
-    
     legend_position=switch(legend,"none"="none","top-right"=c(1,1),"bottom-right"=c(1,0),"top-left"=c(0,1),"bottom-left"=c(0,0))
     
     f.frame=as.data.frame(with(fit,cbind(time,n.risk,n.event,n.censor,surv,upper,lower)))
