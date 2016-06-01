@@ -16,7 +16,7 @@ gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,startPoint=FALSE,
     if(length(namesOfStrata) != 0 && !is.null(fit$strata)) {
         names(fit$strata) = namesOfStrata
     }else{
-        namesOfStrata = names(fit$strata)
+        namesOfStrata = ifelse(!"strata" %in% names(fit),"Overall",names(fit$strata))
     }
     
     legend_position=switch(legend,"none"="none","top-right"=c(1,1),"bottom-right"=c(1,0),"top-left"=c(0,1),"bottom-left"=c(0,0))
@@ -24,8 +24,10 @@ gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,startPoint=FALSE,
     f.frame=as.data.frame(with(fit,cbind(time,n.risk,n.event,n.censor,surv,upper,lower)))
     if(!"strata" %in% names(fit)){
         f.frame$strata=factor("Overall")
+        namesOfStrata=ifelse(length(namesOfStrata)==0,"Overall",namesOfStrata)
     }else {
-        strata=rep(names(fit$strata),fit$strata)
+        namesOfStrata = ifelse(length(namesOfStrata) == 0,names(fit$strata),namesOfStrata)
+        strata=rep(namesOfStrata,fit$strata)
         f.frame$strata=factor(strata,levels=namesOfStrata,ordered = TRUE)
     }
     if(startPoint==FALSE){
