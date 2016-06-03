@@ -22,9 +22,9 @@ gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,startPoint=FALSE,
         levels(fit$strata)="Overall"
     }else {
         if(length(namesOfStrata) == 0){
-            namesOfStrata = levels(fit$strata)
+            namesOfStrata = names(fit$strata)
         }else{
-            levels(fit$strata)=namesOfStrata
+            names(fit$strata)=namesOfStrata
         }
         strata=rep(namesOfStrata,fit$strata)
         f.frame$strata=factor(strata,levels=namesOfStrata,ordered = TRUE)
