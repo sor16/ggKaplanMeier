@@ -13,17 +13,18 @@ gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,startPoint=FALSE,
     
     if(timeInYears) fit$time=fit$time/365.25
     
-
-    
     legend_position=switch(legend,"none"="none","top-right"=c(1,1),"bottom-right"=c(1,0),"top-left"=c(0,1),"bottom-left"=c(0,0))
     
     f.frame=as.data.frame(with(fit,cbind(time,n.risk,n.event,n.censor,surv,upper,lower)))
     if(!"strata" %in% names(fit)){
         f.frame$strata=factor("Overall")
         namesOfStrata="Overall"
+        levels(fit$strata)="Overall"
     }else {
         if(length(namesOfStrata) == 0){
-            namesOfStrata = names(fit$strata)
+            namesOfStrata = levels(fit$strata)
+        }else{
+            levels(fit$strata)=namesOfStrata
         }
         strata=rep(namesOfStrata,fit$strata)
         f.frame$strata=factor(strata,levels=namesOfStrata,ordered = TRUE)
