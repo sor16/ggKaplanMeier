@@ -19,7 +19,7 @@ gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,startPoint=FALSE,
     if(!"strata" %in% names(fit)){
         f.frame$strata=factor("Overall")
         namesOfStrata="Overall"
-        levels(fit$strata)="Overall"
+        #levels(fit$strata)="Overall"
     }else {
         if(length(namesOfStrata) == 0){
             namesOfStrata = names(fit$strata)
