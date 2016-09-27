@@ -1,4 +1,4 @@
-gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,startPoint=FALSE,cumIncidence=FALSE,background=TRUE,ticks="1x",ylabel="surv",xlabel="time",colors=c(),pval=data.frame(text="",x="",y="",stringsAsFactors = FALSE),x_limit=NULL namesOfStrata = c(), timeInYears = FALSE,legendTitle=""){
+gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,startPoint=FALSE,cumIncidence=FALSE,background=TRUE,ticks="1x",ylabel="surv",xlabel="time",colors=c(),pval=data.frame(text="",x="",y="",stringsAsFactors = FALSE),x_limit=NULL, namesOfStrata = c(), timeInYears = FALSE,legendTitle=""){
     require(scales)
     require(grid)
     require(ggplot2)
