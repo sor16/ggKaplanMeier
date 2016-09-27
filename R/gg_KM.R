@@ -1,4 +1,4 @@
-gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,startPoint=FALSE,cumIncidence=FALSE,background=TRUE,ticks="1x",ylabel="surv",xlabel="time",colors=c(),pval=data.frame(text="",x="",y="",stringsAsFactors = FALSE), namesOfStrata = c(), timeInYears = FALSE,legendTitle=""){
+gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,startPoint=FALSE,cumIncidence=FALSE,background=TRUE,ticks="1x",ylabel="surv",xlabel="time",colors=c(),pval=data.frame(text="",x="",y="",stringsAsFactors = FALSE),x_limit=NULL namesOfStrata = c(), timeInYears = FALSE,legendTitle=""){
     require(scales)
     require(grid)
     require(ggplot2)
@@ -68,10 +68,10 @@ gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,startPoint=FALSE,
     if(!is.na(as.numeric(pval$x)) && nchar(pval)!=0){
         g=g+geom_text(data=pval,aes(x,y,label=text),na.rm=TRUE)
     }
-    if(is.null(xlim)){
-        xlim=c(0,max(fit$time))
+    if(is.null(x_limit)){
+        x_limit=c(0,max(fit$time))
     }
-    g=g+xlim(xlim)
+    g=g+xlim(x_limit)
     xticks=ggplot_build(g)$panel$ranges[[1]]$x.major_source
     #Extract the right end of x axis
     xmax= ggplot_build(g)$panel$ranges[[1]]$x.range[2]
