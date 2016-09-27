@@ -10,8 +10,9 @@ gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,startPoint=FALSE,
         fit[["upper"]]=1-fit[["upper"]]
     }
     nrTicks=switch(ticks,"1x"=1,"2x"=2,"4x"=4)
-    
-    if(timeInYears) fit$time=fit$time/365.25
+    if(timeInYears){
+        fit$time=fit$time/365.25
+    }
     
     legend_position=switch(legend,"none"="none","top-right"=c(1,1),"bottom-right"=c(1,0),"top-left"=c(0,1),"bottom-left"=c(0,0))
     
@@ -67,7 +68,10 @@ gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,startPoint=FALSE,
     if(!is.na(as.numeric(pval$x)) && nchar(pval)!=0){
         g=g+geom_text(data=pval,aes(x,y,label=text),na.rm=TRUE)
     }
-    
+    if(is.null(xlim)){
+        xlim=c(0,max(fit$time))
+    }
+    g=g+xlim(xlim)
     xticks=ggplot_build(g)$panel$ranges[[1]]$x.major_source
     #Extract the right end of x axis
     xmax= ggplot_build(g)$panel$ranges[[1]]$x.range[2]
