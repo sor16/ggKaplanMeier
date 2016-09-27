@@ -32,7 +32,7 @@ addrisk <- function(input){
             axis.title.y = element_blank(),
             plot.title = element_blank(),
             plot.margin = unit(c(-0.2,1,1, 1),"cm")
-      ) + xlim(min(f.frame$time),max(f.frame$time))
+      ) #+ xlim(min(f.frame$time),max(f.frame$time))
 
     gb1=ggplot_build(plot)
     gb2=ggplot_build(tbl)
