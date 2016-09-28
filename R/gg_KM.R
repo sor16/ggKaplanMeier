@@ -1,4 +1,4 @@
-gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,startPoint=FALSE,cumIncidence=FALSE,censorSize=1,background=TRUE,ticks="1x",ylabel="surv",xlabel="time",colors=c(),pval=data.frame(text="",x="",y="",stringsAsFactors = FALSE),x_limit=NULL, namesOfStrata = c(), timeInYears = FALSE,legendTitle=""){
+gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,startPoint=FALSE,cumIncidence=FALSE,censorSize=1,stepSize=1,background=TRUE,ticks="1x",ylabel="surv",xlabel="time",colors=c(),pval=data.frame(text="",x="",y="",stringsAsFactors = FALSE),x_limit=NULL, namesOfStrata = c(), timeInYears = FALSE,legendTitle=""){
     require(scales)
     require(grid)
     require(ggplot2)
@@ -38,7 +38,7 @@ gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,startPoint=FALSE,
         f.frame=rbind(start,f.frame)
     }
     f.frame=f.frame[with(f.frame,order(strata,time)),]
-    g=ggplot(data=f.frame,aes(time,surv))+geom_step(aes(time,surv,colour=strata),direction="hv",na.rm=TRUE)+
+    g=ggplot(data=f.frame,aes(time,surv))+geom_step(aes(time,surv,colour=strata),size=stepSize,direction="hv",na.rm=TRUE)+
         geom_point(data=subset(f.frame, n.censor > 0), aes(x=time, y=surv),size=censorSize,shape=3,na.rm=TRUE)+theme_bw()+
         ggtitle(title)+ylab(ylabel)+xlab(xlabel)+ylim(0,1) + scale_color_discrete(name=legendTitle) +
         theme(
