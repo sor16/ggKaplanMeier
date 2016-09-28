@@ -17,7 +17,7 @@ multiKaplanMeier <- function(data,surv_object,wantedColumns,path,width=16,height
             dev.off()
         }else{
             pdf(file=paste(names(plotData)[i],"pdf",sep="."), width =width , height = height,onefile=FALSE)
-            gg_KM(fit,...)$plot
+            print(gg_KM(fit,...)$plot)
             dev.off()
         }
         
