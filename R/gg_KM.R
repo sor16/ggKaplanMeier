@@ -69,7 +69,7 @@ gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,startPoint=FALSE,
         g=g+geom_text(data=pval,aes(x,y,label=text),na.rm=TRUE)
     }
     if(is.null(x_limit)){
-        x_limit=c(0,max(fit$time))
+        x_limit=c(min(fit$time),max(fit$time))
     }
     g=g+scale_x_continuous(limits=x_limit)
     xticks=ggplot_build(g)$panel$ranges[[1]]$x.major_source
