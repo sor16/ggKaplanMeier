@@ -10,10 +10,11 @@ multiKaplanMeier <- function(data,surv_object,wantedColumns,path,width=16,height
         formula <- as.formula(paste("surv_object",names(plotData)[i],sep="~"))
         fit <- survfit(formula, data=plotData)
         
-        if(nrRisk){
+        if(nrRisk==TRUE){
             pdf(file=paste(names(plotData)[i],"pdf",sep="."), width =width , height = height,onefile=FALSE)
             grid.newpage()
             grid.draw(addrisk(gg_KM(fit,...)))
+            dev.off()
         }else{
             pdf(file=paste(names(plotData)[i],"pdf",sep="."), width =width , height = height,onefile=FALSE)
             gg_KM(fit,...)$plot
