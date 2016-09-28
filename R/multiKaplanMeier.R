@@ -1,4 +1,4 @@
-multiKaplanMeier <- function(data,surv_object,wantedColumns,path,width=16,height=9.6,...){
+multiKaplanMeier <- function(data,surv_object,wantedColumns,path,width=16,height=9.6,nrRisk=TRUE,...){
     require(survival)
     require(gridExtra)
     require(devtools)
