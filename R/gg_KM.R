@@ -63,7 +63,7 @@ gg_KM <- function(fit,title="",legend="none",confinterval=TRUE,startPoint=FALSE,
         )
     }
     if(length(colors)!=0){
-        g=g+scale_colour_manual(values=colors)
+        g=g+scale_colour_manual(name=legendTitle,values=colors)
     }
     if(!is.na(as.numeric(pval$x)) && nchar(pval)!=0){
         g=g+geom_text(data=pval,aes(x,y,label=text),na.rm=TRUE)
